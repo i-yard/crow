@@ -257,6 +257,8 @@ namespace crow
             req_ = std::move(parser_.to_request());
             request& req = req_;
 
+            req.remoteIpAddress = adaptor_.remote_endpoint().address().to_string();
+
             if (parser_.check_version(1, 0))
             {
                 // HTTP/1.0
@@ -374,6 +376,8 @@ namespace crow
                 {401, "HTTP/1.1 401 Unauthorized\r\n"},
                 {403, "HTTP/1.1 403 Forbidden\r\n"},
                 {404, "HTTP/1.1 404 Not Found\r\n"},
+                {409, "HTTP/1.1 409 Conflict\r\n"},
+                {410, "HTTP/1.1 410 Gone\r\n"},
                 {413, "HTTP/1.1 413 Payload Too Large\r\n"},
                 {422, "HTTP/1.1 422 Unprocessable Entity\r\n"},
                 {429, "HTTP/1.1 429 Too Many Requests\r\n"},
@@ -557,9 +561,15 @@ namespace crow
             {
                 if (!adaptor_.is_open())
                 {
-                    return;
+                    return true;
+                }
+                if (this->is_writing)
+                {
+                    CROW_LOG_DEBUG << this << " timer called functor but didn't close connection in writing";
+                    return false;
                 }
                 adaptor_.close();
+                return true;
             });
             CROW_LOG_DEBUG << this << " timer added: " << timer_cancel_key_.first << ' ' << timer_cancel_key_.second;
         }

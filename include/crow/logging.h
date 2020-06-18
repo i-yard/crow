@@ -13,14 +13,6 @@ namespace crow
 {
     enum class LogLevel
     {
-#ifndef ERROR
-        DEBUG = 0,
-        INFO,
-        WARNING,
-        ERROR,
-        CRITICAL,
-#endif
-
         Debug = 0,
         Info,
         Warning,
@@ -129,14 +121,14 @@ namespace crow
             crow::logger("CRITICAL", crow::LogLevel::Critical)
 #define CROW_LOG_ERROR      \
         if (crow::logger::get_current_log_level() <= crow::LogLevel::Error) \
-            crow::logger("ERROR   ", crow::LogLevel::Error)
+            crow::logger("ERROR", crow::LogLevel::Error)
 #define CROW_LOG_WARNING    \
         if (crow::logger::get_current_log_level() <= crow::LogLevel::Warning) \
-            crow::logger("WARNING ", crow::LogLevel::Warning)
+            crow::logger("WARNING", crow::LogLevel::Warning)
 #define CROW_LOG_INFO       \
         if (crow::logger::get_current_log_level() <= crow::LogLevel::Info) \
-            crow::logger("INFO    ", crow::LogLevel::Info)
+            crow::logger("INFO", crow::LogLevel::Info)
 #define CROW_LOG_DEBUG      \
         if (crow::logger::get_current_log_level() <= crow::LogLevel::Debug) \
-            crow::logger("DEBUG   ", crow::LogLevel::Debug)
+            crow::logger("DEBUG", crow::LogLevel::Debug)
 

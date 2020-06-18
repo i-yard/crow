@@ -11,6 +11,11 @@
 /* #ifdef - enables ssl */
 //#define CROW_ENABLE_SSL
 
+/* #ifdef - enables websocket compression */
+#ifdef HAVE_ZLIB
+#define CROW_ENABLE_WEBSOCKET_COMPRESSION
+#endif
+
 /* #define - specifies log level */
 /*
     Debug       = 0
@@ -36,5 +41,8 @@
 #define CROW_MSVC_WORKAROUND
 #define constexpr const
 #define noexcept throw()
+#endif
+#if _MSC_VER >= 1910
+#define CROW_CAN_USE_CPP14
 #endif
 #endif

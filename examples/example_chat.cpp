@@ -1,7 +1,10 @@
 #include "crow.h"
+
+#include <sys/stat.h>
 #include <string>
 #include <vector>
 #include <chrono>
+
 
 using namespace std;
 
@@ -23,6 +26,12 @@ void broadcast(const string& msg)
     }
     ress.clear();
 }
+
+inline bool file_exists (const std::string& name) {
+  struct stat buffer;
+  return (stat (name.c_str(), &buffer) == 0);
+}
+
 // To see how it works go on {ip}:40080 but I just got it working with external build (not directly in IDE, I guess a problem with dependency)
 int main()
 {

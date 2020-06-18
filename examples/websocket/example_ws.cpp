@@ -38,7 +38,7 @@ int main()
         crow::mustache::context x;
         x["servername"] = name;
 	
-        auto page = crow::mustache::load("ws.html");
+        auto page = crow::mustache::load("third_party/crow/examples/websocket/ws.html");
         return page.render(x);
      });
 

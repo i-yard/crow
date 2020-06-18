@@ -44,8 +44,7 @@ int main()
 
     app.get_middleware<ExampleMiddleware>().setMessage("hello");
 
-    CROW_ROUTE(app, "/")
-        .name("hello")
+    CROW_ROUTE(app, "/").name("hello")
     ([]{
         return "Hello World!";
     });
@@ -164,7 +163,7 @@ int main()
     });
 
     // enables all log
-    app.loglevel(crow::LogLevel::DEBUG);
+    app.loglevel(crow::LogLevel::Debug);
     //crow::logger::setHandler(std::make_shared<ExampleLogHandler>());
 
     app.port(18080)
